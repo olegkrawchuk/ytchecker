@@ -62,11 +62,18 @@ docker compose up --build
 
 ### CI/CD
 
-Кожен push у `main` збирає обидва образи через GitHub Actions ([`.github/workflows/docker-publish.yml`](.github/workflows/docker-publish.yml)) і публікує їх у GitHub Container Registry: `ghcr.io/olegkrawchuk/ytchecker-backend` та `-frontend`. На продакшн-хості достатньо підтягнути готові образи, без локальної збірки:
+Кожен push у `main` збирає обидва образи через GitHub Actions ([`.github/workflows/docker-publish.yml`](.github/workflows/docker-publish.yml)) і публікує їх у GitHub Container Registry: `ghcr.io/olegkrawchuk/ytchecker-backend` та `-frontend`, з тегом `latest`. На продакшн-хості достатньо підтягнути готові образи, без локальної збірки:
 
 ```bash
 docker compose pull
 docker compose up -d
+```
+
+**Випуск версії:** push у `main` оновлює лише `latest`. Щоб отримати версійний тег (`v1.2.0`, `v1.2`, `v1`):
+
+```bash
+git tag v1.2.0
+git push origin v1.2.0
 ```
 
 ### Локально, без Docker
