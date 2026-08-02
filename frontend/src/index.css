@@ -3,10 +3,55 @@
 }
 
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Rack panel — dark (default) */
+  --charcoal-950: #14161a;
+  --charcoal-900: #191c21;
+  --charcoal-800: #1f232a;
+  --charcoal-700: #2a2f37;
+  --charcoal-600: #3a4048;
+
+  /* Ink */
+  --paper-100: #ece8e0;
+  --steel-400: #a4abb8;
+  --steel-600: #5b616c;
+
+  /* Glow intensity behind lamps — strong on dark, subdued on light */
+  --glow-lg: 0 0 22px 4px color-mix(in srgb, var(--lamp-color) 55%, transparent);
+  --glow-sm: 0 0 8px 1px color-mix(in srgb, var(--lamp-color) 60%, transparent);
+
+  /* True tally signals — fixed by the product, constant across themes */
+  --tally-green: #33d17e;
+  --tally-green-dim: #1d5c3d;
+  --tally-amber: #f2a93b;
+  --tally-amber-dim: #6b5423;
+  --tally-red: #e8362f;
+  --tally-red-dim: #6b2320;
+
+  --font-display: 'Unbounded', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+:root[data-theme='light'] {
+  --charcoal-950: #d9dde3;
+  --charcoal-900: #e7eaee;
+  --charcoal-800: #f7f8fa;
+  --charcoal-700: #e2e5eb;
+  --charcoal-600: #c7cbd3;
+
+  --paper-100: #1b1e23;
+  --steel-400: #565c67;
+  --steel-600: #8790a0;
+
+  --glow-lg: 0 0 12px 2px color-mix(in srgb, var(--lamp-color) 35%, transparent);
+  --glow-sm: 0 0 5px 1px color-mix(in srgb, var(--lamp-color) 40%, transparent);
+
+  color-scheme: light;
 }
 
 html, body {
@@ -16,7 +61,10 @@ html, body {
 
 body {
   margin: 0;
-  background: #f8fafc;
+  background: var(--charcoal-950);
+  color: var(--paper-100);
+  font-family: var(--font-body);
+  transition: background-color 0.2s, color 0.2s;
 }
 
 #root {
@@ -26,4 +74,22 @@ body {
 img, svg {
   max-width: 100%;
   height: auto;
+}
+
+::selection {
+  background: var(--tally-amber);
+  color: var(--charcoal-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--tally-amber);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

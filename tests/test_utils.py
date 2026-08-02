@@ -39,6 +39,14 @@ def test_mobile_url():
     assert extract_video_id(f"https://m.youtube.com/watch?v={VIDEO_ID}") == VIDEO_ID
 
 
+def test_music_youtube_url():
+    assert extract_video_id(f"https://music.youtube.com/watch?v={VIDEO_ID}") == VIDEO_ID
+
+
+def test_music_youtube_url_with_params():
+    assert extract_video_id(f"https://music.youtube.com/watch?v={VIDEO_ID}&feature=share") == VIDEO_ID
+
+
 def test_invalid_domain():
     assert extract_video_id("https://vimeo.com/watch?v=dQw4w9WgXcQ") is None
 

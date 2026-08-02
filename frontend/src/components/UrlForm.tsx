@@ -30,73 +30,36 @@ export function UrlForm({ onSubmit, loading }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+    <form onSubmit={handleSubmit} className="input-strip">
+      <div className="input-strip__row">
         <input
           type="url"
+          className="input-strip__field"
           value={url}
           onChange={e => setUrl(e.target.value)}
           placeholder="https://www.youtube.com/watch?v=..."
           required
           disabled={loading}
-          style={{
-            flex: '1 1 200px',
-            minWidth: 0,
-            padding: '12px 16px',
-            borderRadius: '8px',
-            border: '1.5px solid #d1d5db',
-            fontSize: '0.95rem',
-            outline: 'none',
-            transition: 'border-color 0.15s',
-          }}
-          onFocus={e => (e.target.style.borderColor = '#3b82f6')}
-          onBlur={e => (e.target.style.borderColor = '#d1d5db')}
         />
-        <button
-          type="submit"
-          disabled={loading || !url.trim()}
-          style={{
-            flexShrink: 0,
-            padding: '12px 24px',
-            borderRadius: '8px',
-            border: 'none',
-            background: loading ? '#9ca3af' : '#3b82f6',
-            color: '#fff',
-            fontWeight: 600,
-            fontSize: '0.95rem',
-            cursor: loading ? 'not-allowed' : 'pointer',
-            transition: 'background 0.15s',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {loading ? '⏳ Перевірка...' : '🔍 Перевірити'}
+        <button type="submit" className="input-strip__button" disabled={loading || !url.trim()}>
+          {loading ? 'ПЕРЕВІРКА…' : 'ПЕРЕВІРИТИ'}
         </button>
       </div>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px' }}>
-        <label style={{ fontSize: '0.85rem', color: '#6b7280', whiteSpace: 'nowrap' }}>
-          Регіон стріму:
-        </label>
+      <div className="input-strip__row">
+        <label className="input-strip__label" htmlFor="region">Регіон стріму</label>
         <select
+          id="region"
+          className="input-strip__select"
           value={region}
           onChange={e => setRegion(e.target.value)}
           disabled={loading}
-          style={{
-            padding: '6px 10px',
-            borderRadius: '6px',
-            border: '1.5px solid #d1d5db',
-            fontSize: '0.85rem',
-            cursor: 'pointer',
-            background: '#fff',
-          }}
         >
           {REGIONS.map(r => (
             <option key={r.code} value={r.code}>{r.name}</option>
           ))}
         </select>
-        <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
-          Policy може відрізнятись по країнах
-        </span>
+        <span className="input-strip__hint">Policy може відрізнятись по країнах</span>
       </div>
     </form>
   )

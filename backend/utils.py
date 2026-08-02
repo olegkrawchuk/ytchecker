@@ -12,7 +12,12 @@ def extract_video_id(url: str) -> str | None:
         return short.group(1)
 
     parsed = urlparse(url)
-    if parsed.hostname not in ("www.youtube.com", "youtube.com", "m.youtube.com"):
+    if parsed.hostname not in (
+        "www.youtube.com",
+        "youtube.com",
+        "m.youtube.com",
+        "music.youtube.com",
+    ):
         return None
 
     # /watch?v=VIDEO_ID
