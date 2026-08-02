@@ -39,7 +39,7 @@ export default function App() {
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
       color: '#1f2937',
     }}>
-      <div style={{ maxWidth: '700px', margin: '0 auto', padding: '40px 20px 60px' }}>
+      <div style={{ maxWidth: '700px', margin: '0 auto', padding: 'clamp(24px, 8vw, 40px) clamp(12px, 4vw, 20px) 60px' }}>
 
         {/* Header */}
         <div style={{ marginBottom: '32px', textAlign: 'center' }}>

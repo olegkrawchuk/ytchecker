@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 const REGIONS = [
-  { code: 'US', name: '🇺🇸 США' },
   { code: 'UA', name: '🇺🇦 Україна' },
+  { code: 'US', name: '🇺🇸 США' },
   { code: 'GB', name: '🇬🇧 Велика Британія' },
   { code: 'DE', name: '🇩🇪 Німеччина' },
   { code: 'FR', name: '🇫🇷 Франція' },
@@ -21,7 +21,7 @@ interface Props {
 
 export function UrlForm({ onSubmit, loading }: Props) {
   const [url, setUrl] = useState('')
-  const [region, setRegion] = useState('US')
+  const [region, setRegion] = useState('UA')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -31,7 +31,7 @@ export function UrlForm({ onSubmit, loading }: Props) {
 
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      <div style={{ display: 'flex', gap: '8px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
         <input
           type="url"
           value={url}
@@ -40,7 +40,8 @@ export function UrlForm({ onSubmit, loading }: Props) {
           required
           disabled={loading}
           style={{
-            flex: 1,
+            flex: '1 1 200px',
+            minWidth: 0,
             padding: '12px 16px',
             borderRadius: '8px',
             border: '1.5px solid #d1d5db',
@@ -55,6 +56,7 @@ export function UrlForm({ onSubmit, loading }: Props) {
           type="submit"
           disabled={loading || !url.trim()}
           style={{
+            flexShrink: 0,
             padding: '12px 24px',
             borderRadius: '8px',
             border: 'none',
@@ -71,7 +73,7 @@ export function UrlForm({ onSubmit, loading }: Props) {
         </button>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px' }}>
         <label style={{ fontSize: '0.85rem', color: '#6b7280', whiteSpace: 'nowrap' }}>
           Регіон стріму:
         </label>
