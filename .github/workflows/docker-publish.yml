@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -32,15 +34,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Версія, що показується в футері фронтенду: тег (v1.2.0) або короткий SHA для звичайних push у main
+      # Версія, що показується в футері фронтенду: найближчий git tag + короткий SHA, напр. "v1.0.2 (6cffc80)"
       - name: Determine app version
         id: version
         run: |
-          if [ "${{ github.ref_type }}" = "tag" ]; then
-            echo "value=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
-          else
-            echo "value=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
-          fi
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          echo "value=${LATEST_TAG} (${SHORT_SHA})" >> "$GITHUB_OUTPUT"
 
       # На push тега vX.Y.Z -> vX.Y.Z, vX.Y, vX
       # На push у main -> тільки latest (без номера версії)
