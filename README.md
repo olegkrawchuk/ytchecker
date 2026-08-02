@@ -54,10 +54,11 @@ YouTube URL
 ### Docker Compose (рекомендовано)
 
 ```bash
+cp backend/.env.example backend/.env   # заповніть ключі API або лишіть MOCK_MODE=true
 docker compose up --build
 ```
 
-Фронтенд буде доступний на `http://localhost:80`, бекенд слухає всередині мережі compose на порту `8000` через Redis-кеш.
+Фронтенд буде доступний на `http://localhost:80`, бекенд слухає всередині мережі compose на порту `8000` через Redis-кеш. Бекенд-контейнер підтягує змінні середовища з `backend/.env` (`env_file` у `docker-compose.yml`) — файл ніколи не потрапляє в образ (`.dockerignore`) і не комітиться в git.
 
 ### Локально, без Docker
 
@@ -88,11 +89,13 @@ npm run dev
 | Змінна | Обов'язкова | Опис |
 |---|---|---|
 | `AUDD_API_TOKEN` | так (для реальних перевірок) | Розпізнавання треку. [dashboard.audd.io](https://dashboard.audd.io/) — 300 запитів безкоштовно |
+| `ACRCLOUD_HOST` | ні | Хост ACRCloud (за замовчуванням `identify-eu-west-1.acrcloud.com`) |
 | `ACRCLOUD_ACCESS_KEY` / `ACRCLOUD_ACCESS_SECRET` | ні | `right_policy` правовласника. [acrcloud.com](https://www.acrcloud.com/) — 14 днів тріалу |
 | `YOUTUBE_DATA_API_KEY` | ні | Регіональні обмеження та ліцензія відео. 10 000 units/день безкоштовно |
 | `MOCK_MODE` | ні | `true` — працювати без жодного зовнішнього ключа |
-| `REDIS_URL` | ні | Порожньо — кеш в оперативній пам'яті процесу |
+| `REDIS_URL` | ні | Порожньо — кеш в оперативній пам'яті процесу; в docker-compose виставляється автоматично (`redis://redis:6379`) |
 | `CACHE_TTL_SECONDS` | ні | Час життя кешованого результату (за замовчуванням `21600` = 6 год) |
+| `CORS_ORIGINS` | ні | JSON-масив дозволених origin для CORS (за замовчуванням `["http://localhost:5173","http://127.0.0.1:5173"]`) |
 
 ## API
 

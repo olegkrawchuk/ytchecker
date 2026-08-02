@@ -10,14 +10,21 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
+    # Реальні значення — у backend/.env (скопіюйте з backend/.env.example).
+    # Файл не потрапляє в git (.gitignore) і не потрапляє в образ (.dockerignore).
+    #
+    # Змінні, які читає бекенд (backend/config.py):
+    #   AUDD_API_TOKEN         — токен AudD API, розпізнавання треку (dashboard.audd.io)
+    #   YOUTUBE_DATA_API_KEY   — ключ YouTube Data API v3, регіон/ліцензія відео
+    #   ACRCLOUD_HOST          — хост ACRCloud (напр. identify-eu-west-1.acrcloud.com)
+    #   ACRCLOUD_ACCESS_KEY    — access key ACRCloud, right_policy правовласника
+    #   ACRCLOUD_ACCESS_SECRET — access secret ACRCloud
+    #   MOCK_MODE              — true/false, працювати без зовнішніх API-ключів
+    #   CACHE_TTL_SECONDS      — час життя кешованого результату перевірки (сек)
+    #   CORS_ORIGINS           — дозволені origin для CORS (JSON-масив рядків)
+    env_file:
+      - ./backend/.env
     environment:
-      AUDD_API_TOKEN: ""
-      YOUTUBE_DATA_API_KEY: ""
-      ACRCLOUD_HOST: "identify-eu-west-1.acrcloud.com"
-      ACRCLOUD_ACCESS_KEY: ""
-      ACRCLOUD_ACCESS_SECRET: ""
-      MOCK_MODE: "false"
-      CACHE_TTL_SECONDS: "21600"
       REDIS_URL: "redis://redis:6379"
     depends_on:
       - redis
