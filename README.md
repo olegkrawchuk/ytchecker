@@ -60,6 +60,15 @@ docker compose up --build
 
 Фронтенд буде доступний на `http://localhost:80`, бекенд слухає всередині мережі compose на порту `8000` через Redis-кеш. Бекенд-контейнер підтягує змінні середовища з `backend/.env` (`env_file` у `docker-compose.yml`) — файл ніколи не потрапляє в образ (`.dockerignore`) і не комітиться в git.
 
+### CI/CD
+
+Кожен push у `main` збирає обидва образи через GitHub Actions ([`.github/workflows/docker-publish.yml`](.github/workflows/docker-publish.yml)) і публікує їх у GitHub Container Registry: `ghcr.io/olegkrawchuk/ytchecker-backend` та `-frontend`. На продакшн-хості достатньо підтягнути готові образи, без локальної збірки:
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
 ### Локально, без Docker
 
 **Бекенд**
