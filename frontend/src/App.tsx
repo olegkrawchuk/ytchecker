@@ -162,7 +162,7 @@ export default function App() {
           fontSize: '0.7rem',
           color: '#d1d5db',
         }}>
-          v{import.meta.env.VITE_APP_VERSION ?? 'dev'}
+          {import.meta.env.VITE_APP_VERSION ?? 'dev'}
         </div>
 
       </div>
