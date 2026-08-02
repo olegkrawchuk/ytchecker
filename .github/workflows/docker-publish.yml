@@ -32,6 +32,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Версія, що показується в футері фронтенду: тег (v1.2.0) або короткий SHA для звичайних push у main
+      - name: Determine app version
+        id: version
+        run: |
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            echo "value=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+          fi
+
       # На push тега vX.Y.Z -> vX.Y.Z, vX.Y, vX
       # На push у main -> тільки latest (без номера версії)
       - name: Backend image tags
@@ -72,6 +82,8 @@ jobs:
         with:
           context: ./frontend
           push: true
+          build-args: |
+            APP_VERSION=${{ steps.version.outputs.value }}
           tags: ${{ steps.meta-frontend.outputs.tags }}
           labels: ${{ steps.meta-frontend.outputs.labels }}
           cache-from: type=gha

@@ -155,6 +155,16 @@ export default function App() {
           </div>
         )}
 
+        {/* Footer */}
+        <div style={{
+          marginTop: '32px',
+          textAlign: 'center',
+          fontSize: '0.7rem',
+          color: '#d1d5db',
+        }}>
+          v{import.meta.env.VITE_APP_VERSION ?? 'dev'}
+        </div>
+
       </div>
     </div>
   )
