@@ -1,0 +1,26 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      AUDD_API_TOKEN: ""
+      YOUTUBE_DATA_API_KEY: ""
+      ACRCLOUD_HOST: "identify-eu-west-1.acrcloud.com"
+      ACRCLOUD_ACCESS_KEY: ""
+      ACRCLOUD_ACCESS_SECRET: ""
+      MOCK_MODE: "false"
+      CACHE_TTL_SECONDS: "21600"
+      REDIS_URL: "redis://redis:6379"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
